@@ -1,0 +1,32 @@
+* {
+    font-family:'Arial, Helvetica, sans-serif' ;
+}
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 100px;
+    background-color: #EAF4FF;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    
+}
+
+.login-box h2 {
+    font-size: 18px;
+}
+
+.login-box input,
+.login-box button {
+    padding: 12px;
+    font-size: 16px;         
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

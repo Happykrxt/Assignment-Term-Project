@@ -1,5 +1,4 @@
 /* ========== Select Role Page CSS (external) ========== */
-
 .card-role {
   padding: clamp(20px, 4vw, 32px);
   min-height: 100%;
@@ -28,7 +27,7 @@
 }
 
 .role-option img {
-  width: 110px;
+  width: 95px;
   height: auto;
 }
 

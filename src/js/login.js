@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (ok) {
             console.log("Submit", {
                 email: email.value,
-                remember: document.getElementById("remember").checked
             });
             alert("Signed in (Demo)");
         }

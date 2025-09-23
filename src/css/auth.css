@@ -83,7 +83,7 @@ body {
 }
 
 .brand-logo {
-    height: 64px;
+    height: 128px;
     margin-bottom: 16px;
     opacity: 0.95;
 }
@@ -256,3 +256,4 @@ input.input:focus {
         order: -1;
     }
 }
+

@@ -1,0 +1,53 @@
+/* ========== Select Role Page CSS (external) ========== */
+
+.card-role {
+  padding: clamp(20px, 4vw, 32px);
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 1.5rem;
+}
+
+.role-option {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.role-option img {
+  width: 72px;
+  height: auto;
+  margin-bottom: 12px;
+}
+
+.role-option h3 {
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin: 0;
+  color: gray;
+}
+
+.role-option:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  background: #fff4eb;
+  border-color: var(--primary);
+}
+
+.role-option:hover h3 {
+  color: var(--primary);
+  text-shadow: 0 0 6px rgba(255, 147, 41, 0.4);
+  font-size: 0.95rem;
+}

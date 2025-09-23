@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home | KMUTNB</title>
+    <link rel="stylesheet" href="../css/auth.css" />
+    <link rel="stylesheet" href="../css/select-role.css" />
+
+</head>
+
+<body>
+    <main class="auth-shell">
+        <!-- เอฟเฟกต์พื้นหลัง -->
+        <div class="bg-accent"></div>
+
+        <!-- Grid Layout 2 ฝั่ง -->
+        <section class="auth-grid">
+
+            <!-- ฝั่งซ้าย: Branding -->
+            <aside class="brand-panel">
+                <div class="brand-wrap">
+                    <img src="../../public/images/logo.png" alt="KMUTNB Logo" class="brand-logo" />
+                    <h1 class="brand-title">ยินดีต้อนรับ</h1>
+                    <p class="brand-sub">กรุณาเลือกประเภทผู้ใช้งาน</p>
+                </div>
+            </aside>
+
+            <!-- ฝั่งขวา: การ์ดเลือกบทบาท -->
+            <section class="card card-role">
+                <header class="card-header">
+                    <h2>เลือกประเภทผู้ใช้งาน</h2>
+                    <p class="muted">ระบบสำหรับนักศึกษา อาจารย์ เจ้าหน้าที่ และคณะกรรมการ</p>
+                </header>
+
+                <div class="role-grid">
+                    <div class="role-option" data-role="student">
+                        <img src="../../public/images/i_company.png" alt="ผู้บริหาร">
+                        <h3>กลุ่มนักศึกษา</h3>
+                    </div>
+
+                    <div class="role-option" data-role="teacher">
+                        <img src="../../public/images/i_academic.v2.png" alt="อาจารย์">
+                        <h3>กลุ่มอาจารย์ที่ปรึกษา</h3>
+                    </div>
+
+                    <div class="role-option" data-role="staff">
+                        <img src="../../public/images/i_officer.png" alt="นักเรียน">
+                        <h3>กลุ่มเจ้าหน้าที่</h3>
+                    </div>
+
+                    <div class="role-option" data-role="board">
+                        <img src="../../public/images/i_manager.png" alt="เจ้าหน้าที่">
+                        <h3>กลุ่มคณะกรรมการ</h3>
+                    </div>
+
+                </div>
+            </section>
+
+        </section>
+    </main>
+
+    <script src="../js/select-role.js"></script>
+</body>
+
+</html>

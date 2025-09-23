@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in | Teacher</title>
+    <link rel="stylesheet" href="../../css/auth.css" />
+</head>
+
+<body>
+    <main class="auth-shell">
+        <!-- ลวดลายพื้นหลัง -->
+        <div class="bg-accent"></div>
+
+        <section class="auth-grid">
+            <!-- ซ้าย: โลโก้ -->
+            <aside class="brand-panel">
+                <div class="brand-wrap">
+                    <img src="../../../public/images/logo.png" alt="KMUTNB Logo" class="brand-logo" />
+                    <h1 class="brand-title">ยินดีต้อนรับ</h1>
+                    <p class="brand-sub">เข้าสู่ระบบสำหรับอาจารย์ที่ปรึกษา</p>
+                </div>
+            </aside>
+
+            <!-- ขวา: ฟอร์ม -->
+            <section class="card">
+                <header class="card-header">
+                    <h2>เข้าสู่ระบบ</h2>
+                    <p class="muted">กรุณาเข้าสู่ระบบด้วยบัญชีมหาวิทยาลัย</p>
+                </header>
+
+                <form class="form" id="loginForm" novalidate>
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="you@teacher.kmutnb.ac.th"
+                                class="input" required autocomplete="off" />
+                            <small class="error" data-error-for="email"></small>
+                        </div>
+
+                        <div class="field">
+                            <label for="password">Password</label>
+                            <div class="password-wrap">
+                                <input type="password" id="password" name="password" placeholder="กรอกรหัสผ่าน"
+                                    class="input" required minlength="6" autocomplete="new-password" />
+                                <button class="toggle-pass" type="button" aria-label="toggle password"></button>
+                            </div>
+                            <small class="error" data-error-for="password"></small>
+                        </div>
+
+                        <div class="field-row">
+                            <a class="link" href="#">ลืมรหัสผ่าน?</a>
+                        </div>
+
+                        <button class="btn-primary" type="submit">เข้าสู่ระบบ</button>
+                    </div>
+                </form>
+
+                <footer class="card-footer">
+                    <p class="muted">ยังไม่มีบัญชี? <a class="link" href="#">ลงทะเบียน</a></p>
+                </footer>
+            </section>
+        </section>
+    </main>
+
+    <script src="../../js/login.js"></script>
+</body>
+
+</html>

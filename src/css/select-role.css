@@ -24,12 +24,12 @@
   box-shadow: 0 6px 16px rgba(0,0,0,0.05);
   transition: all 0.2s ease;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .role-option img {
-  width: 72px;
+  width: 110px;
   height: auto;
-  margin-bottom: 12px;
 }
 
 .role-option h3 {

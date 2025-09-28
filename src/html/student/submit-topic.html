@@ -1,65 +1,157 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ระบบยื่นสอบหัวข้อโครงงาน</title>
-    <!-- Main stylesheet (same folder) -->
-    <link rel="stylesheet" href="../../css/styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ระบบยื่นสอบหัวข้อโครงงาน</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
 </head>
-
 <body>
-    <div class="d-flex" id="wrapper">
-        <!-- Sidebar -->
-        <aside id="sidebar-wrapper">
-            <div class="sidebar-heading">
-                <img src="../../../public/images/kmutnbfinal.png" alt="Logo" class="logo" />
-            </div>
-            <nav class="list-group">
-                <a href="homepage.html" class="list-group-item ">หน้าแรก</a>
-                <a href="propose-topic.html" class="list-group-item ">ระบบเสนอหัวข้อโครงงาน</a>
-                <a href="submit-topic.html" class="list-group-item active">ระบบยื่นสอบหัวข้อโครงงาน</a>
-            </nav>
-        </aside>
+  <div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <aside id="sidebar-wrapper">
+      <div class="sidebar-heading">
+        <img src="../../../public/images/kmutnbfinal.png" alt="Logo" class="logo"/>
+      </div>
+      <nav class="list-group">
+        <a href="homepage.html" class="list-group-item">หน้าแรก</a>
+        <a href="propose-topic.html" class="list-group-item">ระบบเสนอหัวข้อโครงงาน</a>
+        <a href="submit-topic.html" class="list-group-item active">ระบบยื่นสอบหัวข้อโครงงาน</a>
+      </nav>
+    </aside>
 
-        <!-- Page Content -->
-        <main id="page-content-wrapper">
-            <!-- Header / Navbar -->
-            <header class="navbar">
-                <div class="left">
-                </div>
+    <!-- Page Content -->
+    <main id="page-content-wrapper">
+      <!-- Header -->
+      <header class="navbar">
+        <div class="left">
+          <h1 class="page-title">ยื่นสอบหัวข้อโครงงาน</h1>
+        </div>
+        <div class="right">
+          <div class="search">
+            <input id="searchInput" type="text" placeholder="ค้นหาจากหัวข้อ/อาจารย์/สถานะ..."/>
+          </div>
+          <span>User User</span>
+          <div class="avatar" title="User"></div>
+        </div>
+      </header>
 
-                <div class="right">
-                    <span>User User</span>
-                    <div class="avatar" title="User">
-                    </div>
-                </div>
-            </header>
+      <!-- Content -->
+      <section class="container-fluid">
+        <p class="lead">ระบบยื่นสอบหัวข้อโครงงาน | KMUTNB</p>
 
-            <!-- Content -->
-            <section class="container-fluid">
-                <p class="lead">ระบบยื่นสอบหัวข้อโครงงาน | KMUTNB</p>
+        <!-- พื้นที่หลัก -->
+        <div class="cards-grid">
+          <!-- ฟอร์ม: ซ่อนก่อน จะแสดงด้วย FAB -->
+          <section id="formSection" class="form-plain hidden full-span">
+            <h2 class="form-title">แบบฟอร์มยื่นสอบหัวข้อ</h2>
 
-                <div class="cards-grid">
+            <form id="submitForm" class="form-grid-2col" novalidate>
+              <!-- หัวข้อโครงงาน (ดึงจาก proposals.v1 ถ้ามี) -->
+              <div class="field field-span-2">
+                <label for="topicSelect">เลือกหัวข้อโครงงาน <span class="req">*</span></label>
+                <select id="topicSelect" class="input form-select-custom" required>
+                  <option value="">-- เลือกหัวข้อจากที่เสนอไว้ --</option>
+                  <!-- จะเติมด้วย JS จาก localStorage: proposals.v1 -->
+                </select>
+                <small class="error" data-error-for="topicSelect"></small>
+              </div>
 
-                </div>
-            </section>
+              <!-- อาจารย์ที่ปรึกษา (อ่านอัตโนมัติเมื่อเลือกหัวข้อ แต่ยังแก้ได้) -->
+              <div class="field">
+                <label for="advisor">อาจารย์ที่ปรึกษา <span class="req">*</span></label>
+                <select id="advisor" class="input form-select-custom" required>
+                  <option value="">-- เลือกอาจารย์ที่ปรึกษา --</option>
+                  <option>รศ.ดร.อนิราช มิ่งขวัญ</option>
+                  <option>ผศ.อรบุษป์ วุฒิกมลชัย</option>
+                  <option>ผศ.ดร.บีสุดา ดาวเรือง</option>
+                  <option>ผศ.ดร.ขนิษฐา นามี</option>
+                  <option>อ.ดร.กาญจน ณ ศรีธะ</option>
+                  <option>ผศ.นพดล บูรณ์กุศล</option>
+                  <option>ผศ.จสต.นพเก้า ทองใบ</option>
+                  <option>ผศ.ดร.นิติการ นาคเจือทอง</option>
+                  <option>ผศ.ดร.นัฎฐพันธ์ นาคพงษ์</option>
+                  <option>ผศ.นิมิต ศรีคำทา</option>
+                  <option>อ.ดร.พิทย์พิมล ชูรอด</option>
+                  <option>ผศ.ดร.พาฝัน ดวงไพศาล</option>
+                  <option>อ.ดร.ประดิษฐ์ พิทักษ์เสถียรกุล</option>
+                  <option>ผศ.พีระศักดิ์ เสรีกุล</option>
+                  <option>ผศ.สมชัย เชียงพงศ์พันธุ์</option>
+                  <option>ผศ.ดร.สุปีติ กุลจันทร์</option>
+                  <option>ผศ.สิวาลัย จินเจือ</option>
+                  <option>ผศ.ดร.สุพาภรณ์ ซิ้มเจริญ</option>
+                  <option>ผศ.ดร.ศรายุทธ ธเนศสกุลวัฒนา</option>
+                  <option>อ.ดร.ศิรินทรา แว่วศรี</option>
+                  <option>อ.ดร.วัชรชัย คงศิริวัฒนา</option>
+                  <option>ผศ.ดร.วันทนี ประจวบศุภกิจ</option>
+                  <option>รศ.ดร.ยุพิน สรรพคุณ</option>
+                </select>
+                <small class="error" data-error-for="advisor"></small>
+              </div>
 
-            <!-- Footer -->
-            <footer class="footer">
-                <small>© 2025 Your Company</small>
-            </footer>
-        </main>
-    </div>
+              <!-- หมวดหมู่ (อ่านอัตโนมัติเมื่อเลือกหัวข้อ แต่แก้ได้) -->
+              <div class="field">
+                <label for="category">หมวดหมู่ <span class="req">*</span></label>
+                <select id="category" class="input" required>
+                  <option value="">-- เลือกหมวดหมู่ --</option>
+                  <option>Web / Mobile</option>
+                  <option>Data / AI</option>
+                  <option>IoT / Embedded</option>
+                  <option>Networking / Security</option>
+                  <option>อื่น ๆ</option>
+                </select>
+                <small class="error" data-error-for="category"></small>
+              </div>
 
-    <script>
-        const wrapper = document.getElementById("wrapper");
-        const toggleBtn = document.getElementById("menu-toggle");
-        toggleBtn?.addEventListener("click", () => {
-            wrapper.classList.toggle("toggled");
-        });
-    </script>
+              <!-- วันที่ประสงค์สอบ -->
+              <div class="field">
+                <label for="preferredDate">วันที่ประสงค์สอบ</label>
+                <input id="preferredDate" class="input" type="date" />
+              </div>
+
+              <!-- สมาชิก (อ่านอัตโนมัติจากหัวข้อ แต่แก้ได้) -->
+              <div class="field field-span-2">
+                <label for="members">รายชื่อนักศึกษา (คั่นด้วย , )</label>
+                <input id="members" class="input" type="text" placeholder="เช่น กิตติ, สมหญิง, วรางค์" />
+              </div>
+
+              <!-- หมายเหตุ/ลิงก์แนบ -->
+              <div class="field field-span-2">
+                <label for="note">หมายเหตุ / ลิงก์เอกสารแนบ</label>
+                <textarea id="note" class="input textarea" rows="3" placeholder="เช่น ลิงก์เอกสารโครงร่าง, ไฟล์แนบ ฯลฯ"></textarea>
+              </div>
+
+              <!-- ปุ่ม -->
+              <div class="actions field-span-2">
+                <button id="saveBtn" type="submit" class="btn-primary">ยื่นสอบ</button>
+                <button id="cancelBtn" type="button" class="btn-ghost">ยกเลิก</button>
+              </div>
+            </form>
+          </section>
+
+          <!-- แถวข้อมูลแบบ table-like -->
+          <div class="full-span">
+            <div id="submitRows" class="rows"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ปุ่มลอย เพิ่มการยื่นสอบ -->
+      <button id="addSubmitBtn" class="fab-btn" title="ยื่นสอบหัวข้อ">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </button>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <small>© 2025 Your Company</small>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../../js/submit-topic.js"></script>
 </body>
-
 </html>

@@ -1032,3 +1032,32 @@ select.input option {
         grid-template-columns: 1fr;
     }
 }
+
+/* ปุ่มเล็กในแถว */
+.btn-chip {
+    appearance: none;
+    border: 1px solid #fdba74;
+    background: #fff;
+    color: #f97316;
+    font-weight: 600;
+    font-size: .82rem;
+    padding: 6px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .2s, border-color .2s, transform .1s;
+}
+
+.btn-chip:hover {
+    background: #fff7ed;
+    border-color: #fb923c;
+}
+
+.btn-chip:active {
+    transform: scale(.98);
+}
+
+.row-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

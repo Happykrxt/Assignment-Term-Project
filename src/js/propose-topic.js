@@ -1,44 +1,37 @@
-// /js/propose-topic.js
+/* /js/propose-topic.js */
 (function () {
     const LS_KEY = "proposals.v1";
 
+    // ===== Shortcuts =====
     const $ = (sel, root = document) => root.querySelector(sel);
     const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-    // Elements
+    // ===== Elements =====
     const formSection = $("#formSection");
-    const addTopicBtn = $("#addTopicBtn");   // FAB ปุ่มลอย
-    const cancelBtn = $("#cancelBtn");
-
+    const addTopicBtn = $("#addTopicBtn");        // FAB
     const form = $("#proposalForm");
-    const title = $("#title");
-    const advisor = $("#advisor");
-    const category = $("#category");
-    const members = $("#members");
-    const description = $("#description");
-
-    // (อาจไม่มีในหน้าเวอร์ชันนี้)
-    const listEl = $("#proposalList");
-    const emptyState = $("#emptyState");
-
-    const searchInput = $("#searchInput");
-    const statusFilter = $("#statusFilter");
+    const titleEl = $("#title");
+    const advisorEl = $("#advisor");
+    const categoryEl = $("#category");
+    const membersEl = $("#members");
+    const descEl = $("#description");
+    const cancelBtn = $("#cancelBtn");
 
     const errTitle = $('[data-error-for="title"]');
     const errAdvisor = $('[data-error-for="advisor"]');
     const errCategory = $('[data-error-for="category"]');
 
-    // กล่องสรุปข้อมูล
-    const savedBox = $("#savedData");
+    // พื้นที่แสดงแถวแบบตาราง
+    const rowsEl = $("#proposalRows");       // <div id="proposalRows" class="rows">
+    // (หากหน้าเก่ายังมี list เดิมอยู่ โค้ดก็จะไม่พัง เพราะเราไม่ได้อ้างถึงมัน)
 
+    // ===== State =====
     const state = {
         proposals: [],
-        editId: null,
-        q: "",
-        status: ""
+        editId: null,     // ถ้าไม่ null = กำลังแก้ไข
     };
 
-    /* ---------- Storage ---------- */
+    // ===== Storage =====
     function load() {
         try {
             const raw = localStorage.getItem(LS_KEY);
@@ -51,43 +44,49 @@
         localStorage.setItem(LS_KEY, JSON.stringify(state.proposals));
     }
 
-    /* ---------- Helpers ---------- */
+    // ===== Utils =====
     const uid = () => Math.random().toString(36).slice(2, 10);
+    const fmtDateTime = (ts) => {
+        try {
+            return new Date(ts).toLocaleString();
+        } catch {
+            return "-";
+        }
+    };
 
     function showForm() {
         if (!formSection) return;
         formSection.classList.remove("hidden");
-        window.scrollTo({ top: formSection.offsetTop - 16, behavior: "smooth" });
-        title?.focus();
+        // เลื่อนมาให้เห็นฟอร์มชัด ๆ
+        const top = formSection.getBoundingClientRect().top + window.scrollY - 12;
+        window.scrollTo({ top, behavior: "smooth" });
+        titleEl?.focus();
     }
     function hideForm() {
         formSection?.classList.add("hidden");
     }
-
     function clearErrors() {
         if (errTitle) errTitle.textContent = "";
         if (errAdvisor) errAdvisor.textContent = "";
         if (errCategory) errCategory.textContent = "";
     }
-
     function validate() {
         clearErrors();
         let ok = true;
-        if (title && !title.value.trim()) {
+        if (!titleEl?.value.trim()) {
             if (errTitle) errTitle.textContent = "กรุณากรอกชื่อหัวข้อ";
             ok = false;
         }
-        if (advisor && !advisor.value.trim()) {
-            if (errAdvisor) errAdvisor.textContent = "กรุณาเลือก/กรอกชื่ออาจารย์ที่ปรึกษา";
+        if (!advisorEl?.value.trim()) {
+            if (errAdvisor) errAdvisor.textContent = "กรุณาเลือกอาจารย์ที่ปรึกษา";
             ok = false;
         }
-        if (category && !category.value.trim()) {
+        if (!categoryEl?.value.trim()) {
             if (errCategory) errCategory.textContent = "กรุณาเลือกหมวดหมู่";
             ok = false;
         }
         return ok;
     }
-
     function resetForm() {
         form?.reset();
         state.editId = null;
@@ -96,83 +95,90 @@
     }
 
     function toBadge(status) {
-        const map = {
+        const cls = {
             draft: "badge badge-draft",
             submitted: "badge badge-submitted",
             approved: "badge badge-approved",
             rejected: "badge badge-rejected",
-        };
-        const text = {
+        }[status] || "badge";
+        const txt = {
             draft: "แบบร่าง",
             submitted: "ส่งพิจารณา",
             approved: "อนุมัติ",
             rejected: "ไม่อนุมัติ",
         }[status] || status;
-        return `<span class="${map[status] || "badge"} badge-inline">${text}</span>`;
+        return `<span class="${cls}">${txt}</span>`;
     }
 
-    function renderList() {
-        // เฉพาะหน้าที่มี list เท่านั้น
-        if (!listEl) return;
+    // ===== Rows rendering (table-like) =====
+    function renderRows() {
+        if (!rowsEl) return;
 
-        const q = state.q.toLowerCase();
-        const status = state.status;
+        // แสดงล่าสุดไว้บนสุด
+        const items = [...state.proposals].sort((a, b) => b.updatedAt - a.updatedAt);
 
-        const items = state.proposals
-            .filter(p => {
-                const hitQ =
-                    !q ||
-                    p.title.toLowerCase().includes(q) ||
-                    p.advisor.toLowerCase().includes(q) ||
-                    p.category.toLowerCase().includes(q);
-                const hitS = !status || p.status === status;
-                return hitQ && hitS;
-            })
-            .sort((a, b) => b.createdAt - a.createdAt);
-
-        listEl.innerHTML = items
-            .map(p => {
-                const membersTxt = p.members?.length ? p.members.join(", ") : "-";
-                return `
-        <div class="proposal-card">
-          <div class="proposal-head">
-            <h3 class="proposal-title">${p.title}</h3>
-            ${toBadge(p.status)}
+        rowsEl.innerHTML = items.map(p => {
+            const count = p.members?.length || 0;
+            const membersTxt = count ? p.members.join(", ") : "-";
+            return `
+        <div class="row-card" data-id="${p.id}">
+            <div class="row-head" role="button" tabindex="0" aria-expanded="false">
+                <div class="row-title" title="${escapeHTML(p.title)}">${escapeHTML(p.title)}</div>
+                <div class="row-left">
+                    ${toBadge(p.status)}
+                    <span class="count-pill">${count} คน</span>
+                </div>
+            </div>
+            
+          <div class="row-body">
+            <div class="kv">
+              <div class="k">ชื่อหัวข้อ</div><div class="v">${escapeHTML(p.title)}</div>
+              <div class="k">อาจารย์ที่ปรึกษา</div><div class="v">${escapeHTML(p.advisor)}</div>
+              <div class="k">หมวดหมู่</div><div class="v"><span class="chip">${escapeHTML(p.category)}</span></div>
+              <div class="k">สมาชิก</div><div class="v">${escapeHTML(membersTxt)}</div>
+              <div class="k">คำอธิบาย</div><div class="v">${p.description ? escapeHTML(p.description) : "-"}</div>
+              <div class="k">อัปเดตล่าสุด</div><div class="v">${fmtDateTime(p.updatedAt)}</div>
+            </div>
           </div>
-          <div class="proposal-meta">
-            <span class="chip">${p.category}</span>
-            <span class="sep">•</span>
-            <span class="muted">อาจารย์ที่ปรึกษา: ${p.advisor}</span>
-          </div>
-          <p class="proposal-desc">${p.description || "-"}</p>
-          <div class="proposal-members">
-            <span class="muted">สมาชิก:</span> ${membersTxt}
-          </div>
-        </div>`;
-            })
-            .join("");
+        </div>
+      `;
+        }).join("");
 
-        if (emptyState) emptyState.style.display = items.length ? "none" : "block";
+        // Event: expand/collapse
+        rowsEl.querySelectorAll(".row-head").forEach(head => {
+            head.addEventListener("click", () => toggleRow(head));
+            head.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    toggleRow(head);
+                }
+            });
+        });
     }
 
-    function showSavedSummary(p) {
-        if (!savedBox) return;
-        const membersTxt = p.members?.length ? p.members.join(", ") : "-";
-        savedBox.innerHTML = `
-      <h3 class="title">บันทึกหัวข้อเรียบร้อย ${toBadge(p.status)}</h3>
-      <div class="kv">
-        <div class="k">ชื่อหัวข้อ</div><div class="v">${p.title}</div>
-        <div class="k">อาจารย์ที่ปรึกษา</div><div class="v">${p.advisor}</div>
-        <div class="k">หมวดหมู่</div><div class="v"><span class="chip">${p.category}</span></div>
-        <div class="k">สมาชิก</div><div class="v">${membersTxt}</div>
-        <div class="k">คำอธิบาย</div><div class="v">${p.description || "-"}</div>
-      </div>
-    `;
-        savedBox.classList.remove("hidden");
-        savedBox.scrollIntoView({ behavior: "smooth", block: "start" });
+    function toggleRow(headEl) {
+        const card = headEl.closest(".row-card");
+        if (!card) return;
+        const body = card.querySelector(".row-body");
+        const expanded = headEl.getAttribute("aria-expanded") === "true";
+        headEl.setAttribute("aria-expanded", expanded ? "false" : "true");
+        body.classList.toggle("show", !expanded);
     }
 
-    /* ---------- Actions ---------- */
+    // หลังบันทึกให้เลื่อน และเปิดรายละเอียดของแถวล่าสุด
+    function focusRowById(id) {
+        if (!rowsEl) return;
+        const card = rowsEl.querySelector(`.row-card[data-id="${CSS.escape(id)}"]`);
+        if (card) {
+            card.scrollIntoView({ behavior: "smooth", block: "start" });
+            const head = card.querySelector(".row-head");
+            const body = card.querySelector(".row-body");
+            head?.setAttribute("aria-expanded", "true");
+            body?.classList.add("show");
+        }
+    }
+
+    // ===== CRUD =====
     function upsertProposal(payload) {
         let saved;
         if (state.editId) {
@@ -195,16 +201,24 @@
             };
             state.proposals.push(saved);
         }
-
         save();
-        renderList();          // ถ้ามี list
-        showSavedSummary(saved);
-
+        renderRows();
         resetForm();
-        hideForm();            // ปิดฟอร์มหลังบันทึก
+        hideForm();
+        if (saved) focusRowById(saved.id);
     }
 
-    /* ---------- Events ---------- */
+    // ===== Helpers (security/format) =====
+    function escapeHTML(str) {
+        return String(str)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+    // ===== Events =====
     addTopicBtn?.addEventListener("click", () => {
         resetForm();
         clearErrors();
@@ -220,26 +234,21 @@
     form?.addEventListener("submit", (e) => {
         e.preventDefault();
         if (!validate()) return;
+
         const payload = {
-            title: title.value.trim(),
-            advisor: advisor.value.trim(),
-            category: category.value.trim(),
-            members: members.value.split(",").map(s => s.trim()).filter(Boolean),
-            description: description.value.trim(),
+            title: titleEl.value.trim(),
+            advisor: advisorEl.value.trim(),
+            category: categoryEl.value.trim(),
+            members: membersEl.value
+                .split(",")
+                .map(s => s.trim())
+                .filter(Boolean),
+            description: descEl.value.trim(),
         };
         upsertProposal(payload);
     });
 
-    searchInput?.addEventListener("input", (e) => {
-        state.q = e.target.value || "";
-        renderList();
-    });
-    statusFilter?.addEventListener("change", (e) => {
-        state.status = e.target.value || "";
-        renderList();
-    });
-
-    /* ---------- Init ---------- */
+    // ===== Init =====
     load();
-    renderList();
+    renderRows();
 })();

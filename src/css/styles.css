@@ -760,7 +760,7 @@ select.input option {
 
 /* แถบหัวกระดาน */
 .row-card {
-    border: 1px solid var(--border);
+    /* border: 1px solid var(--border); */
     border-radius: 12px;
     background: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, .06);
@@ -809,7 +809,7 @@ select.input option {
 /* ขวา: ชื่อเรื่อง (ตัดคำให้บรรทัดเดียว) */
 .row-title {
     font-weight: 700;
-    color: #0f172a;
+    color: #6d6d6d;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1060,4 +1060,72 @@ select.input option {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+/* ==== Submit Topic Rows ==== */
+#submitRows .row-card {
+  background: transparent;   /* ไม่มีกรอบรอบนอก */
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+#submitRows .row-card + .row-card {
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb; /* เส้นคั่นระหว่างแถว */
+}
+
+#submitRows .row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  /* ชื่อซ้าย - สถานะขวา */
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+#submitRows .row-head:hover {
+  background: #fff7ed; /* ส้มอ่อนตอน hover */
+}
+
+#submitRows .row-title {
+  font-weight: 700;
+  color: #6d6d6d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1; /* กินพื้นที่ฝั่งซ้าย */
+}
+
+#submitRows .row-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 12px;
+}
+
+#submitRows .row-body {
+  display: none;
+  padding: 10px 4px 2px;
+  border-top: 1px dashed #e5e7eb;
+  background: #fff;
+}
+
+#submitRows .row-body.show {
+  display: block;
+}
+
+#submitRows .kv {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 6px 12px;
+}
+
+#submitRows .kv .k { color: #64748b; }
+#submitRows .kv .v { color: #0f172a; }
+
+@media (max-width: 720px) {
+  #submitRows .kv { grid-template-columns: 1fr; }
 }

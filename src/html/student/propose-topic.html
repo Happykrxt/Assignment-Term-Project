@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ระบบเสนอหัวข้อโครงงาน</title>
+
+    <!-- สไตล์หลักของโปรเจ็กต์ -->
+    <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <aside id="sidebar-wrapper">
+            <div class="sidebar-heading">
+                <img src="../../../public/images/kmutnbfinal.png" alt="Logo" class="logo" />
+            </div>
+            <nav class="list-group">
+                <a href="homepage.html" class="list-group-item">หน้าแรก</a>
+                <a href="propose-topic.html" class="list-group-item active">ระบบเสนอหัวข้อโครงงาน</a>
+                <a href="submit-topic.html" class="list-group-item">ระบบยื่นสอบหัวข้อโครงงาน</a>
+            </nav>
+        </aside>
+
+        <!-- Page Content -->
+        <main id="page-content-wrapper">
+            <!-- Header -->
+            <header class="navbar">
+                <div class="left">
+                    <h1 class="page-title">เสนอหัวข้อโครงงาน</h1>
+                </div>
+                <div class="right">
+                    <div class="search">
+                        <input id="searchInput" type="text" placeholder="ค้นหาหัวข้อ/อาจารย์/หมวดหมู่..." />
+                    </div>
+                    <span>User User</span>
+                    <div class="avatar" title="User"></div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <section class="container-fluid">
+                <p class="lead">ระบบเสนอหัวข้อโครงงาน | KMUTNB</p>
+
+                <!-- พื้นที่หลัก: ใช้ cards-grid และโชว์เฉพาะฟอร์ม + การ์ดสรุปหลังบันทึก -->
+                <div class="cards-grid">
+
+                    <!-- ฟอร์ม (ซ่อนก่อนจนกดปุ่มลอย) -->
+                    <section id="formSection" class="form-plain hidden full-span">
+                        <h2 class="form-title">แบบฟอร์มเสนอหัวข้อ</h2>
+
+                        <!-- ฟอร์ม 2 คอลัมน์แบบกระชับ -->
+                        <form id="proposalForm" class="form-grid-2col" novalidate>
+                            <!-- ชื่อหัวข้อ = full -->
+                            <div class="field field-span-2">
+                                <label for="title">ชื่อหัวข้อโครงงาน <span class="req">*</span></label>
+                                <input id="title" class="input" type="text"
+                                    placeholder="เช่น ระบบติดตามงานสหกิจด้วยเว็บแอป" required />
+                                <small class="error" data-error-for="title"></small>
+                            </div>
+
+                            <!-- อาจารย์ + หมวดหมู่ = แบ่งครึ่ง -->
+                            <div class="field">
+                                <label for="advisor">อาจารย์ที่ปรึกษา <span class="req">*</span></label>
+                                <select id="advisor" class="input form-select-custom" required>
+                                    <option value="">-- เลือกอาจารย์ที่ปรึกษา --</option>
+                                    <option>รศ.ดร.อนิราช มิ่งขวัญ</option>
+                                    <option>ผศ.อรบุษป์ วุฒิกมลชัย</option>
+                                    <option>ผศ.ดร.บีสุดา ดาวเรือง</option>
+                                    <option>ผศ.ดร.ขนิษฐา นามี</option>
+                                    <option>อ.ดร.กาญจน ณ ศรีธะ</option>
+                                    <option>ผศ.นพดล บูรณ์กุศล</option>
+                                    <option>ผศ.จสต.นพเก้า ทองใบ</option>
+                                    <option>ผศ.ดร.นิติการ นาคเจือทอง</option>
+                                    <option>ผศ.ดร.นัฎฐพันธ์ นาคพงษ์</option>
+                                    <option>ผศ.นิมิต ศรีคำทา</option>
+                                    <option>อ.ดร.พิทย์พิมล ชูรอด</option>
+                                    <option>ผศ.ดร.พาฝัน ดวงไพศาล</option>
+                                    <option>อ.ดร.ประดิษฐ์ พิทักษ์เสถียรกุล</option>
+                                    <option>ผศ.พีระศักดิ์ เสรีกุล</option>
+                                    <option>ผศ.สมชัย เชียงพงศ์พันธุ์</option>
+                                    <option>ผศ.ดร.สุปีติ กุลจันทร์</option>
+                                    <option>ผศ.สิวาลัย จินเจือ</option>
+                                    <option>ผศ.ดร.สุพาภรณ์ ซิ้มเจริญ</option>
+                                    <option>ผศ.ดร.ศรายุทธ ธเนศสกุลวัฒนา</option>
+                                    <option>อ.ดร.ศิรินทรา แว่วศรี</option>
+                                    <option>อ.ดร.วัชรชัย คงศิริวัฒนา</option>
+                                    <option>ผศ.ดร.วันทนี ประจวบศุภกิจ</option>
+                                    <option>รศ.ดร.ยุพิน สรรพคุณ</option>
+                                </select>
+                                <small class="error" data-error-for="advisor"></small>
+                            </div>
+
+                            <div class="field">
+                                <label for="category">หมวดหมู่ <span class="req">*</span></label>
+                                <select id="category" class="input" required>
+                                    <option value="">-- เลือกหมวดหมู่ --</option>
+                                    <option>Web / Mobile</option>
+                                    <option>Data / AI</option>
+                                    <option>IoT / Embedded</option>
+                                    <option>Networking / Security</option>
+                                    <option>อื่น ๆ</option>
+                                </select>
+                                <small class="error" data-error-for="category"></small>
+                            </div>
+
+                            <!-- รายชื่อ = full -->
+                            <div class="field field-span-2">
+                                <label for="members">รายชื่อนักศึกษา (คั่นด้วย , )</label>
+                                <input id="members" class="input" type="text"
+                                    placeholder="เช่น กิตติ, สมหญิง, วรางค์" />
+                            </div>
+
+                            <!-- คำอธิบาย = full -->
+                            <div class="field field-span-2">
+                                <label for="description">คำอธิบาย/ขอบเขตงาน</label>
+                                <textarea id="description" class="input textarea" rows="4"
+                                    placeholder="สรุปแนวคิด วัตถุประสงค์ และขอบเขตการพัฒนา"></textarea>
+                            </div>
+
+                            <!-- ปุ่ม -->
+                            <div class="actions field-span-2">
+                                <button id="saveBtn" type="submit" class="btn-primary">บันทึกหัวข้อ</button>
+                                <button id="cancelBtn" type="button" class="btn-ghost">ยกเลิก</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- สรุปข้อมูลล่าสุดหลังบันทึก -->
+                    <div id="savedData" class="card hidden full-span"></div>
+                </div>
+            </section>
+
+            <!-- ปุ่มเพิ่มหัวข้อแบบ Floating (ลอยมุมขวาล่าง) -->
+            <button id="addTopicBtn" class="fab-btn" title="เพิ่มหัวข้อ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <small>© 2025 Your Company</small>
+            </footer>
+        </main>
+    </div>
+
+    <!-- สคริปต์หลักของหน้า (แยกไฟล์ตามที่กำหนด) -->
+    <script src="../../js/propose-topic.js"></script>
+</body>
+
+</html>

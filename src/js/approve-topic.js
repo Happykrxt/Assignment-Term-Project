@@ -1,4 +1,4 @@
-/* approve-topic.js — Full-span list with collapsible details + actions */
+/* approve-topic.js — Full-span list with collapsible details + actions (scoped classes: approve-*) */
 (function () {
     const LS_PROPOSALS = "proposals.v1";
 
@@ -10,9 +10,12 @@
         String(str ?? "")
             .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
             .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
-    const statusTH = (s) => s === "approved" ? "อนุมัติแล้ว" : s === "rejected" ? "ไม่อนุมัติ" : "รอพิจารณา";
 
-    // ===== Normalizers (โครงข้อมูลจาก propose v1 อาจหลากหลาย) =====
+    const statusTH = (s) =>
+        s === "approved" ? "อนุมัติแล้ว" :
+            s === "rejected" ? "ไม่อนุมัติ" : "รอพิจารณา";
+
+    // ===== Normalizers (รับหลายรูปแบบจาก propose v1) =====
     function normalizeStudents(p) {
         if (Array.isArray(p?.students) && p.students.length) {
             return p.students.map((x, i) => typeof x === "object"
@@ -28,6 +31,7 @@
         const single = p?.studentName ?? p?.student ?? p?.leader ?? p?.owner ?? p?.submitter ?? "";
         return single ? [{ name: String(single), email: "", id: "" }] : [];
     }
+
     function normalizeAdvisor(p) {
         if (p?.advisor && typeof p.advisor === "object") {
             return {
@@ -56,11 +60,12 @@
             return [];
         }
     }
+
     function saveProposals(list) {
         localStorage.setItem(LS_PROPOSALS, JSON.stringify(list));
     }
 
-    // ===== Render (Full-span rows + accordion body) =====
+    // ===== Render (full-span row + accordion body) =====
     function studentsLine(p) {
         const list = p._students ?? [];
         if (!list.length) return "—";
@@ -71,6 +76,7 @@
             return `${name}${sid}${mail}`;
         }).join(" • ");
     }
+
     function advisorLine(p) {
         const a = p._advisor || { name: "", email: "" };
         if (!a.name && !a.email) return "—";
@@ -80,7 +86,10 @@
     }
 
     function renderItem(p) {
-        const stClass = p.status === "approved" ? "badge-approved" : p.status === "rejected" ? "badge-rejected" : "badge-pending";
+        const stClass =
+            p.status === "approved" ? "approve-badge-approved" :
+                p.status === "rejected" ? "approve-badge-rejected" : "approve-badge-pending";
+
         return `
       <article class="approve-item" data-id="${p.id}">
         <div class="approve-head" role="button" tabindex="0" aria-expanded="false">
@@ -89,20 +98,20 @@
             <h3 title="${escapeHTML(p.title || "(ไม่มีชื่อหัวข้อ)")}">${escapeHTML(p.title || "(ไม่มีชื่อหัวข้อ)")}</h3>
           </div>
           <div class="approve-badges">
-            <span class="badge ${stClass}">${statusTH(p.status)}</span>
-            <span class="badge badge-muted">${p._students?.length || 0} คน</span>
+            <span class="approve-badge ${stClass}">${statusTH(p.status)}</span>
+            <span class="approve-badge approve-badge-muted">${p._students?.length || 0} คน</span>
           </div>
         </div>
 
         <div class="approve-body">
-          <p class="muted">${escapeHTML(p.summary || "— ไม่มีคำอธิบาย —")}</p>
-          <div class="meta"><span class="muted">นักศึกษา: ${studentsLine(p)}</span></div>
-          <div class="meta"><span class="muted">อาจารย์ที่ปรึกษา: ${advisorLine(p)}</span></div>
-          ${p.decidedBy ? `<div class="meta"><span class="muted">โดย: ${escapeHTML(p.decidedBy)}${p.decidedAt ? ` (${new Date(p.decidedAt).toLocaleString()})` : ""}</span></div>` : ""}
+          <p class="approve-muted">${escapeHTML(p.summary || "— ไม่มีคำอธิบาย —")}</p>
+          <div class="approve-meta"><span class="approve-muted">นักศึกษา: ${studentsLine(p)}</span></div>
+          <div class="approve-meta"><span class="approve-muted">อาจารย์ที่ปรึกษา: ${advisorLine(p)}</span></div>
+          ${p.decidedBy ? `<div class="approve-meta"><span class="approve-muted">โดย: ${escapeHTML(p.decidedBy)}${p.decidedAt ? ` (${new Date(p.decidedAt).toLocaleString()})` : ""}</span></div>` : ""}
           <div class="approve-actions">
-            <button class="btn btn-approve" data-act="approve">อนุมัติ</button>
-            <button class="btn btn-reject"  data-act="reject">ไม่อนุมัติ</button>
-            <button class="btn btn-reset"   data-act="reset">รีเซ็ตเป็นรอพิจารณา</button>
+            <button class="approve-btn approve-btn-approve" data-act="approve">อนุมัติ</button>
+            <button class="approve-btn approve-btn-reject"  data-act="reject">ไม่อนุมัติ</button>
+            <button class="approve-btn approve-btn-reset"   data-act="reset">รีเซ็ตเป็นรอพิจารณา</button>
           </div>
         </div>
       </article>
@@ -110,7 +119,7 @@
     }
 
     // ===== State & UI =====
-    const grid = $("#proposalRows");
+    const grid = $("#proposalRows");            // full-span container
     const searchInput = $("#searchInput");
     const statusFilter = $("#statusFilter");
     const refreshBtn = $("#refreshBtn");
@@ -138,7 +147,7 @@
 
     function render() {
         if (!view.length) {
-            grid.innerHTML = `<div class="empty">ยังไม่มีรายการ หรือไม่พบผลลัพธ์ตามเงื่อนไขที่เลือก</div>`;
+            grid.innerHTML = `<div class="approve-empty">ยังไม่มีรายการ หรือไม่พบผลลัพธ์ตามเงื่อนไขที่เลือก</div>`;
             return;
         }
         grid.innerHTML = view.map(renderItem).join("");
@@ -157,9 +166,12 @@
             allProposals[idx].decidedBy = TEACHER_NAME;
             allProposals[idx].decidedAt = nowISO();
         }
+
         saveProposals(allProposals);
         allProposals = loadProposals(); // re-normalize
         applyFilters();
+
+        // keep expanded & focus
         requestAnimationFrame(() => {
             const el = grid.querySelector(`[data-id="${id}"]`);
             el?.classList.add("open");
@@ -177,6 +189,7 @@
             head.setAttribute("aria-expanded", item.classList.contains("open") ? "true" : "false");
             return;
         }
+
         const btn = e.target.closest("button[data-act]");
         if (!btn) return;
         const id = e.target.closest(".approve-item")?.dataset?.id;
@@ -188,7 +201,6 @@
         if (act === "reset") setStatus(id, "reset");
     });
 
-    // คีย์บอร์ดเปิด/ปิด
     grid.addEventListener("keydown", (e) => {
         if (e.target.matches(".approve-head") && (e.key === "Enter" || e.key === " ")) {
             e.preventDefault();

@@ -1886,158 +1886,10 @@ select.input option {
     }
 }
 
-.topic-item {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
-    overflow: hidden;
-    /* กันเนื้อหาล้นตอนพับ */
-}
+/* ===== Approve (Full-span) – Minimal Scoped Styles ===== */
 
-/* หัวการ์ดแบบแถวเดียว กดแล้วพับ/กางได้ */
-.topic-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    cursor: pointer;
-    background: #fffaf2;
-}
-
-.topic-title {
-    min-width: 0;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.topic-title h3 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 800;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.topic-badges {
-    display: flex;
-    gap: 8px;
-    align-items: center
-}
-
-/* badge/ชิปสถานะและจำนวนนักศึกษา */
-.badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    font-weight: 700;
-    font-size: .8rem;
-    background: #fff;
-}
-
-.badge-muted {
-    background: #eef2ff;
-    border-color: #e5e7eb;
-    color: #475569
-}
-
-.badge-pending {
-    background: #fff7ed;
-    border-color: #fed7aa;
-    color: #a16207
-}
-
-.badge-approved {
-    background: #ecfdf5;
-    border-color: #a7f3d0;
-    color: #065f46
-}
-
-.badge-rejected {
-    background: #fef2f2;
-    border-color: #fecaca;
-    color: #7f1d1d
-}
-
-/* เนื้อหาที่กางออก */
-.topic-body {
-    max-height: 0;
-    overflow: hidden;
-    padding: 0 14px;
-    opacity: .97;
-    transition: max-height .25s ease, padding .2s ease;
-}
-
-.topic-item.open .topic-body {
-    max-height: 420px;
-    /* สูงเท่าที่แสดงรายละเอียดพอประมาณ */
-    padding: 10px 14px 12px;
-    /* ใส่ padding เมื่อกางเท่านั้น */
-}
-
-.topic-body .muted {
-    color: var(--muted);
-    line-height: 1.45;
-    margin: 4px 0 8px
-}
-
-.topic-body .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 2px 0 8px
-}
-
-/* ปุ่มด้านล่าง (ถ้ามี) */
-.topic-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 6px
-}
-
-.topic-actions .btn {
-    appearance: none;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 8px 10px;
-    background: #fff;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform .12s ease, box-shadow .12s ease;
-}
-
-.topic-actions .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, .1)
-}
-
-.topic-actions .btn-approve {
-    border-color: #86efac;
-    background: #ecfdf5;
-    color: #065f46
-}
-
-.topic-actions .btn-reject {
-    border-color: #fecaca;
-    background: #fef2f2;
-    color: #7f1d1d
-}
-
-.topic-actions .btn-reset {
-    border-color: #fcd9b6;
-    background: #fffaf5;
-    color: #92400e
-}
-
-/* ===== Toolbar (ใช้ร่วมได้) ===== */
-.toolbar {
+/* Toolbar เฉพาะหน้านี้ */
+.approve-toolbar {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
@@ -2050,24 +1902,39 @@ select.input option {
     box-shadow: 0 6px 12px rgba(0, 0, 0, .2)
 }
 
-.toolbar .input {
+.approve-input {
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 10px 12px;
     outline: none
 }
 
-.toolbar select {
+.approve-select {
     padding: 10px 12px;
     border-radius: 10px;
     border: 1px solid var(--border)
 }
 
-/* ===== Full-span Rows (หน้าอนุมัติ) ===== */
-.rows.full-span {
+.approve-btn {
+    appearance: none;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    background: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.approve-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
+}
+
+/* คอนเทนเนอร์ full-span เฉพาะหน้านี้ */
+.approve-rows {
     display: grid;
     grid-template-columns: 1fr;
-    /* เต็มความกว้าง คอลัมน์เดียว */
     gap: 16px;
     background: #ffffff;
     padding: 1.5rem;
@@ -2075,10 +1942,9 @@ select.input option {
     box-shadow: 0 6px 12px rgba(0, 0, 0, .2);
     margin: 20px;
     min-height: auto;
-    /* สูงตามเนื้อหา ไม่ fix 500px */
 }
 
-/* ===== Approve – Row items (accordion) ===== */
+/* แถวรายการ + ส่วนหัวที่คลิกได้ */
 .approve-item {
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -2087,7 +1953,6 @@ select.input option {
     overflow: hidden;
 }
 
-/* Header (click to toggle) */
 .approve-head {
     display: flex;
     justify-content: space-between;
@@ -2130,8 +1995,8 @@ select.input option {
     align-items: center
 }
 
-/* Badges */
-.badge {
+/* ป้ายสถานะ */
+.approve-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -2143,31 +2008,31 @@ select.input option {
     background: #fff;
 }
 
-.badge-muted {
+.approve-badge-muted {
     background: #eef2ff;
     border-color: #e5e7eb;
     color: #475569
 }
 
-.badge-pending {
+.approve-badge-pending {
     background: #fff7ed;
     border-color: #fed7aa;
     color: #a16207
 }
 
-.badge-approved {
+.approve-badge-approved {
     background: #ecfdf5;
     border-color: #a7f3d0;
     color: #065f46
 }
 
-.badge-rejected {
+.approve-badge-rejected {
     background: #fef2f2;
     border-color: #fecaca;
     color: #7f1d1d
 }
 
-/* Body (collapsible) */
+/* เนื้อหาที่กางออก */
 .approve-body {
     max-height: 0;
     overflow: hidden;
@@ -2178,24 +2043,23 @@ select.input option {
 
 .approve-item.open .approve-body {
     max-height: 480px;
-    /* พอสำหรับรายละเอียดทั่วไป */
     padding: 10px 14px 12px;
 }
 
-.approve-body .muted {
+.approve-muted {
     color: var(--muted);
     line-height: 1.45;
     margin: 4px 0 8px
 }
 
-.approve-body .meta {
+.approve-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin: 2px 0 8px
 }
 
-/* Actions */
+/* ปุ่ม action เฉพาะหน้านี้ */
 .approve-actions {
     display: flex;
     gap: 8px;
@@ -2203,36 +2067,30 @@ select.input option {
     margin-top: 6px
 }
 
-.btn {
-    appearance: none;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 8px 10px;
-    background: #fff;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform .12s ease, box-shadow .12s ease;
-}
-
-.btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, .1)
-}
-
-.btn-approve {
+.approve-btn-approve {
     border-color: #86efac;
     background: #ecfdf5;
     color: #065f46
 }
 
-.btn-reject {
+.approve-btn-reject {
     border-color: #fecaca;
     background: #fef2f2;
     color: #7f1d1d
 }
 
-.btn-reset {
+.approve-btn-reset {
     border-color: #fcd9b6;
     background: #fffaf5;
     color: #92400e
+}
+
+/* กล่องว่างเมื่อไม่มีผลลัพธ์ */
+.approve-empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 28px;
+    border: 1px dashed var(--border);
+    background: #fff;
+    border-radius: 12px
 }

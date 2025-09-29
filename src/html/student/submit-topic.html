@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ระบบยื่นสอบหัวข้อโครงงาน</title>
   <link rel="stylesheet" href="../../css/styles.css" />
+  <meta name="view-transition" content="same-origin">
 </head>
 
 <body>
@@ -17,8 +18,8 @@
       </div>
       <nav class="list-group">
         <a href="homepage.html" class="list-group-item">หน้าแรก</a>
-        <a href="propose-topic.html" class="list-group-item">เสนอหัวข้อโครงงาน</a>
-        <a href="submit-topic.html" class="list-group-item active">ยื่นสอบหัวข้อโครงงาน</a>
+        <a href="propose-topic.html" class="list-group-item">ระบบเสนอหัวข้อโครงงาน</a>
+        <a href="submit-topic.html" class="list-group-item active">ระบบยื่นสอบหัวข้อโครงงาน</a>
       </nav>
     </aside>
 
@@ -27,14 +28,10 @@
       <!-- Header -->
       <header class="navbar">
         <div class="left">
-          <h1 class="page-title">ยื่นสอบหัวข้อโครงงาน</h1>
         </div>
         <div class="right">
-          <div class="search">
-            <input id="searchInput" type="text" placeholder="ค้นหา..." />
-          </div>
           <span>User User</span>
-          <div class="avatar"></div>
+          <div class="avatar" title="User"></div>
         </div>
       </header>
 
@@ -119,6 +116,7 @@
   </div>
 
   <script src="../../js/submit-topic.js"></script>
+  <script src="../../js/page-transitions.js"></script>
 </body>
 
 </html>

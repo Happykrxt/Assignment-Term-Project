@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>อนุมัติหัวข้อโครงงาน | KMUTNB</title>
   <!-- ใช้สไตล์หลักเดิมของโปรเจกต์ -->
   <link rel="stylesheet" href="../../css/styles.css" />
@@ -35,13 +36,14 @@
 
       <section class="container-fluid">
         <p class="lead">
-          รายการหัวข้อจากระบบเสนอหัวข้อโครงงาน (propose v1)<br/>
+          รายการหัวข้อจากระบบเสนอหัวข้อโครงงาน (propose v1)<br />
           คลิกที่หัวข้อเพื่อกางรายละเอียด จากนั้นเลือก “อนุมัติ / ไม่อนุมัติ / รีเซ็ต”
         </p>
 
         <!-- Toolbar (scope เฉพาะหน้านี้) -->
         <div class="approve-toolbar">
-          <input id="searchInput" class="approve-input" type="text" placeholder="ค้นหาชื่อหัวข้อ / ชื่อนักศึกษา / อาจารย์ที่ปรึกษา…" />
+          <input id="searchInput" class="approve-input" type="text"
+            placeholder="ค้นหาชื่อหัวข้อ / ชื่อนักศึกษา / อาจารย์ที่ปรึกษา…" />
           <select id="statusFilter" class="approve-select">
             <option value="all">สถานะทั้งหมด</option>
             <option value="pending">รอพิจารณา</option>
@@ -50,9 +52,9 @@
           </select>
           <button id="refreshBtn" class="approve-btn">รีเฟรชรายการ</button>
         </div>
-
-        <!-- Full-span container เฉพาะหน้านี้ (ไม่กระทบ .cards-grid เดิม) -->
-        <div id="proposalRows" class="approve-rows"></div>
+        <div class="content-card">
+          <div id="proposalRows" class="approve-rows"></div>
+        </div>
       </section>
 
       <footer class="footer">
@@ -70,4 +72,5 @@
   <!-- ลอจิกเฉพาะหน้านี้ -->
   <script src="../../js/approve-topic.js"></script>
 </body>
+
 </html>

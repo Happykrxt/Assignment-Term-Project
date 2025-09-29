@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>หน้าแรก</title>
+    <!-- Main stylesheet (same folder) -->
+    <meta name="view-transition" content="same-origin">
+    <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <aside id="sidebar-wrapper">
+            <div class="sidebar-heading">
+                <img src="../../../public/images/kmutnbfinal.png" alt="Logo" class="logo" />
+            </div>
+            <nav class="list-group">
+                <a href="homepage.html" class="list-group-item active">หน้าแรก</a>
+                <a href="approve-topic.html" class="list-group-item">ระบบเสนอหัวข้อโครงงาน</a>
+            </nav>
+        </aside>
+
+        <!-- Page Content -->
+        <main id="page-content-wrapper">
+            <!-- Header / Navbar -->
+            <header class="navbar">
+                <div class="left">
+                </div>
+
+                <div class="right">
+                    <span>Teacher Teacher</span>
+                    <div class="avatar" title="User">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <section class="container-fluid">
+                <p class="lead">ประกาศ | ข่าว</p>
+
+                <div class="cards-grid">
+
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <small>© 2025 Your Company</small>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        const wrapper = document.getElementById("wrapper");
+        const toggleBtn = document.getElementById("menu-toggle");
+        toggleBtn?.addEventListener("click", () => {
+            wrapper.classList.toggle("toggled");
+        });
+    </script>
+    <script src="../../js/page-transitions.js"></script>
+</body>
+
+</html>

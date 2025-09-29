@@ -1568,3 +1568,671 @@ select.input option {
 .hidden {
     display: none !important;
 }
+
+/* ===== Approve Topic (Teacher) – Components ===== */
+
+/* สถานะเป็นชิปวงรี */
+.status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: .85rem;
+    border: 1px solid var(--border);
+    background: #fff
+}
+
+.st-pending {
+    color: #a16207;
+    background: #fff7ed;
+    border-color: #fed7aa
+}
+
+.st-approved {
+    color: #065f46;
+    background: #ecfdf5;
+    border-color: #a7f3d0
+}
+
+.st-rejected {
+    color: #7f1d1d;
+    background: #fef2f2;
+    border-color: #fecaca
+}
+
+/* หัวข้อการ์ด + ข้อความรอง */
+.card-title {
+    font-weight: 800;
+    margin: 0 0 6px 0;
+    font-size: 1.05rem
+}
+
+.muted {
+    color: var(--muted)
+}
+
+/* แถวเมทาดาต้าใต้หัวข้อ */
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 6px 0 12px
+}
+
+/* แถวปุ่มในแต่ละการ์ด */
+.btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap
+}
+
+/* ปุ่มพื้นฐานให้กลืนธีมเดิม */
+.btn {
+    appearance: none;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    background: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .08)
+}
+
+.btn-approve {
+    border-color: #86efac;
+    background: #ecfdf5;
+    color: #065f46
+}
+
+.btn-reject {
+    border-color: #fecaca;
+    background: #fef2f2;
+    color: #7f1d1d
+}
+
+.btn-reset {
+    border-color: #fcd9b6;
+    background: #fffaf5;
+    color: #92400e
+}
+
+/* แถบเครื่องมือด้านบนของหน้า (ค้นหา/ตัวกรอง/รีเฟรช) */
+.toolbar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0 20px 14px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .2)
+}
+
+.toolbar .input {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    outline: none
+}
+
+.toolbar select {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border)
+}
+
+/* กล่องแจ้งว่าว่าง/ไม่พบข้อมูล */
+.empty {
+    grid-column: 1/-1;
+    text-align: center;
+    color: var(--muted);
+    padding: 28px;
+    border: 1px dashed var(--border);
+    background: #fff;
+    border-radius: 12px
+}
+
+#cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 16px;
+    min-height: auto;
+    /* override ของเดิมให้พอดีเนื้อหา */
+}
+
+/* การ์ดแบบย่อ/กาง */
+.approve-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    overflow: hidden;
+    /* ให้ส่วน body ถูกตัดเวลา collapse */
+}
+
+/* ส่วนหัวที่คลิกได้ */
+.approve-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 12px 14px;
+}
+
+.approve-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.approve-title h3 {
+    font-size: 1rem;
+    font-weight: 800;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.approve-chevron {
+    transition: transform .2s ease;
+    opacity: .7;
+    flex: 0 0 auto;
+}
+
+.approve-item.open .approve-chevron {
+    transform: rotate(90deg);
+}
+
+/* ชิปสถานะเล็ก */
+.status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    font-weight: 700;
+    font-size: .8rem;
+    background: #fff;
+}
+
+.st-pending {
+    color: #a16207;
+    background: #fff7ed;
+    border-color: #fed7aa
+}
+
+.st-approved {
+    color: #065f46;
+    background: #ecfdf5;
+    border-color: #a7f3d0
+}
+
+.st-rejected {
+    color: #7f1d1d;
+    background: #fef2f2;
+    border-color: #fecaca
+}
+
+/* ตัวเนื้อหาที่กางออก */
+.approve-body {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 14px;
+    /* เริ่มไม่มี padding-top/bottom จะใส่ตอน open */
+    transition: max-height .25s ease, padding .2s ease, opacity .2s ease;
+    opacity: .96;
+}
+
+.approve-item.open .approve-body {
+    /* ให้ขยายได้พอสำหรับรายละเอียดทั่วไป */
+    max-height: 480px;
+    padding: 8px 14px 12px;
+}
+
+/* เนื้อหาด้านใน */
+.approve-body .muted {
+    color: var(--muted);
+    line-height: 1.45;
+    margin: 4px 0 8px;
+}
+
+.approve-body .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 2px 0 8px;
+}
+
+/* ปุ่มด้านล่าง */
+.approve-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.btn {
+    appearance: none;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    background: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
+}
+
+.btn-approve {
+    border-color: #86efac;
+    background: #ecfdf5;
+    color: #065f46
+}
+
+.btn-reject {
+    border-color: #fecaca;
+    background: #fef2f2;
+    color: #7f1d1d
+}
+
+.btn-reset {
+    border-color: #fcd9b6;
+    background: #fffaf5;
+    color: #92400e
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    #cardsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    #cardsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 992px) {
+    #cardsGrid {
+        grid-template-columns: repeat(2, 1fr);
+        /* Tablet = 2 คอลัมน์ */
+    }
+}
+
+@media (max-width: 640px) {
+    #cardsGrid {
+        grid-template-columns: 1fr;
+        /* Mobile = 1 คอลัมน์ */
+    }
+}
+
+.topic-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    overflow: hidden;
+    /* กันเนื้อหาล้นตอนพับ */
+}
+
+/* หัวการ์ดแบบแถวเดียว กดแล้วพับ/กางได้ */
+.topic-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    background: #fffaf2;
+}
+
+.topic-title {
+    min-width: 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.topic-title h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.topic-badges {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+
+/* badge/ชิปสถานะและจำนวนนักศึกษา */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    font-weight: 700;
+    font-size: .8rem;
+    background: #fff;
+}
+
+.badge-muted {
+    background: #eef2ff;
+    border-color: #e5e7eb;
+    color: #475569
+}
+
+.badge-pending {
+    background: #fff7ed;
+    border-color: #fed7aa;
+    color: #a16207
+}
+
+.badge-approved {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+    color: #065f46
+}
+
+.badge-rejected {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #7f1d1d
+}
+
+/* เนื้อหาที่กางออก */
+.topic-body {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 14px;
+    opacity: .97;
+    transition: max-height .25s ease, padding .2s ease;
+}
+
+.topic-item.open .topic-body {
+    max-height: 420px;
+    /* สูงเท่าที่แสดงรายละเอียดพอประมาณ */
+    padding: 10px 14px 12px;
+    /* ใส่ padding เมื่อกางเท่านั้น */
+}
+
+.topic-body .muted {
+    color: var(--muted);
+    line-height: 1.45;
+    margin: 4px 0 8px
+}
+
+.topic-body .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 2px 0 8px
+}
+
+/* ปุ่มด้านล่าง (ถ้ามี) */
+.topic-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px
+}
+
+.topic-actions .btn {
+    appearance: none;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    background: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.topic-actions .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .1)
+}
+
+.topic-actions .btn-approve {
+    border-color: #86efac;
+    background: #ecfdf5;
+    color: #065f46
+}
+
+.topic-actions .btn-reject {
+    border-color: #fecaca;
+    background: #fef2f2;
+    color: #7f1d1d
+}
+
+.topic-actions .btn-reset {
+    border-color: #fcd9b6;
+    background: #fffaf5;
+    color: #92400e
+}
+
+/* ===== Toolbar (ใช้ร่วมได้) ===== */
+.toolbar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0 20px 14px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .2)
+}
+
+.toolbar .input {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    outline: none
+}
+
+.toolbar select {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border)
+}
+
+/* ===== Full-span Rows (หน้าอนุมัติ) ===== */
+.rows.full-span {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* เต็มความกว้าง คอลัมน์เดียว */
+    gap: 16px;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .2);
+    margin: 20px;
+    min-height: auto;
+    /* สูงตามเนื้อหา ไม่ fix 500px */
+}
+
+/* ===== Approve – Row items (accordion) ===== */
+.approve-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    overflow: hidden;
+}
+
+/* Header (click to toggle) */
+.approve-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    background: #fffaf2;
+}
+
+.approve-title {
+    min-width: 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.approve-title h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.approve-chevron {
+    transition: transform .2s ease;
+    opacity: .7;
+    flex: 0 0 auto;
+}
+
+.approve-item.open .approve-chevron {
+    transform: rotate(90deg);
+}
+
+.approve-badges {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    font-weight: 700;
+    font-size: .8rem;
+    background: #fff;
+}
+
+.badge-muted {
+    background: #eef2ff;
+    border-color: #e5e7eb;
+    color: #475569
+}
+
+.badge-pending {
+    background: #fff7ed;
+    border-color: #fed7aa;
+    color: #a16207
+}
+
+.badge-approved {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+    color: #065f46
+}
+
+.badge-rejected {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #7f1d1d
+}
+
+/* Body (collapsible) */
+.approve-body {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 14px;
+    opacity: .97;
+    transition: max-height .25s ease, padding .2s ease;
+}
+
+.approve-item.open .approve-body {
+    max-height: 480px;
+    /* พอสำหรับรายละเอียดทั่วไป */
+    padding: 10px 14px 12px;
+}
+
+.approve-body .muted {
+    color: var(--muted);
+    line-height: 1.45;
+    margin: 4px 0 8px
+}
+
+.approve-body .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 2px 0 8px
+}
+
+/* Actions */
+.approve-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px
+}
+
+.btn {
+    appearance: none;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    background: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .1)
+}
+
+.btn-approve {
+    border-color: #86efac;
+    background: #ecfdf5;
+    color: #065f46
+}
+
+.btn-reject {
+    border-color: #fecaca;
+    background: #fef2f2;
+    color: #7f1d1d
+}
+
+.btn-reset {
+    border-color: #fcd9b6;
+    background: #fffaf5;
+    color: #92400e
+}

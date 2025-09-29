@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>อนุมัติหัวข้อโครงงาน | KMUTNB</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+
+<body>
+  <div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <aside id="sidebar-wrapper">
+      <div class="sidebar-heading">
+        <img src="../../../public/images/kmutnbfinal.png" alt="Logo" class="logo" />
+      </div>
+      <nav class="list-group">
+        <a href="homepage.html" class="list-group-item">หน้าแรก</a>
+        <a href="propose-topic.html" class="list-group-item">ระบบเสนอหัวข้อโครงงาน</a>
+        <a href="submit-topic.html" class="list-group-item">ระบบยื่นสอบหัวข้อโครงงาน</a>
+        <a href="approve-topic.html" class="list-group-item active">อนุมัติหัวข้อโครงงาน</a>
+      </nav>
+    </aside>
+
+    <!-- Page Content -->
+    <main id="page-content-wrapper">
+      <header class="navbar">
+        <div class="left">
+          <h1 class="page-title">อนุมัติหัวข้อโครงงาน</h1>
+        </div>
+        <div class="right">
+          <span id="teacherName">Advisor</span>
+          <div class="avatar" title="Teacher"></div>
+        </div>
+      </header>
+
+      <section class="container-fluid">
+        <p class="lead">รายการหัวข้อจากระบบเสนอหัวข้อโครงงาน (propose v1) — คลิกหัวข้อเพื่อกางรายละเอียด แล้วเลือก “อนุมัติ/ไม่อนุมัติ/รีเซ็ต”</p>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+          <input id="searchInput" class="input" type="text" placeholder="ค้นหาชื่อหัวข้อ / ชื่อนักศึกษา / อาจารย์ที่ปรึกษา…" />
+          <select id="statusFilter">
+            <option value="all">สถานะทั้งหมด</option>
+            <option value="pending">รอพิจารณา</option>
+            <option value="approved">อนุมัติแล้ว</option>
+            <option value="rejected">ไม่อนุมัติ</option>
+          </select>
+          <button id="refreshBtn" class="btn">รีเฟรชรายการ</button>
+        </div>
+
+        <!-- Full-span container (หนึ่งแถวเต็มกว้าง) -->
+        <div id="proposalRows" class="rows full-span"></div>
+      </section>
+
+      <footer class="footer">
+        <small>© 2025 KMUTNB</small>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const wrapper = document.getElementById("wrapper");
+    const toggleBtn = document.getElementById("menu-toggle");
+    toggleBtn?.addEventListener("click", () => wrapper.classList.toggle("toggled"));
+  </script>
+
+  <script src="../../js/approve-topic.js"></script>
+</body>
+</html>
